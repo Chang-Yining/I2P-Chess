@@ -12,8 +12,21 @@
  * @return int 
  */
 int State::evaluate(){
+  //Basic state-value function
   // [TODO] design your own evaluation function
-  return 0;
+  const int corresponding_value[7] = {0,2,6,7,8,20,200};
+  //0:none, 1:pawn, 2:rook, 3:knight, 4:bishop, 5:Queen, 6:King
+  int value = 0;
+  for(int i = 0 ; i < BOARD_H ; i++){
+    for(int j = 0 ; j < BOARD_W ; j++){
+      int current_piece = this->board.board[1-player][i][j];
+      value += corresponding_value[current_piece];
+
+      int opponent_piece = this->board.board[player][i][j];
+      value -= corresponding_value[opponent_piece];
+    }
+  }
+  return value;
 }
 
 
