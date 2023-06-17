@@ -19,10 +19,10 @@ int State::evaluate(){
   int value = 0;
   for(int i = 0 ; i < BOARD_H ; i++){
     for(int j = 0 ; j < BOARD_W ; j++){
-      int current_piece = this->board.board[1-player][i][j];
+      int current_piece = this->board.board[player][i][j];
       value += corresponding_value[current_piece];
 
-      int opponent_piece = this->board.board[player][i][j];
+      int opponent_piece = this->board.board[1-player][i][j];
       value -= corresponding_value[opponent_piece];
     }
   }
