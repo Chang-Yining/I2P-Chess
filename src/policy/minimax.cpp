@@ -11,7 +11,7 @@
  * @param depth You may need this for other policy
  * @return Move 
  */
-Move Minimax::get_move(State *state, int depth){
+Move Minimax::get_move(State *state, int depth, int self){
   if(!state->legal_actions.size())
     state->get_legal_actions();
   
@@ -20,7 +20,7 @@ Move Minimax::get_move(State *state, int depth){
   Move decision ;
   for(auto next_action:actions){
     State *next_state = state->next_state(next_action);
-    int score = Minimax::getNodeScore(next_state,depth-1,false);
+    int score = Minimax::getNodeScore(next_state,depth-1,false, self);
     if(score > maximum){
         maximum  = score;
         decision = next_action;
@@ -30,20 +30,20 @@ Move Minimax::get_move(State *state, int depth){
   return decision;
 }
 
-int Minimax::getNodeScore(State *state, int depth, bool MaximizingPlayer){
+int Minimax::getNodeScore(State *state, int depth, bool MaximizingPlayer, int self){
      if(!state->legal_actions.size())
         state->get_legal_actions();
     if(depth == 0 || !state->legal_actions.size()){
-        return state->evaluate();
+        return state->evaluate(self);
     }
     int score = MaximizingPlayer?-1e9:1e9;
     auto actions = state->legal_actions;
     for(auto next_action:actions){
         State *next_state = state->next_state(next_action);
         if(MaximizingPlayer){
-            score = std::max(score,getNodeScore(next_state,depth-1,false));
+            score = std::max(score,getNodeScore(next_state,depth-1,false, self));
         }else{
-            score = std::min(score,getNodeScore(next_state,depth-1,true));
+            score = std::min(score,getNodeScore(next_state,depth-1,true, self));
         }
     }
     return score;
