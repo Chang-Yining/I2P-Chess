@@ -53,7 +53,7 @@ class State{
     State(Board board): board(board){};
     State(Board board, int player): board(board), player(player){};
     
-    int evaluate();
+    int evaluate(int self);
     State* next_state(Move move);
     void get_legal_actions();
     std::string encode_output();

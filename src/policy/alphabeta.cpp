@@ -43,12 +43,12 @@ int Alphabeta::getNodeScore(State *state, int depth, int alpha, int beta, bool M
         if(MaximizingPlayer){
             score = std::max(score,getNodeScore(next_state,depth-1,alpha, beta, false, self));
             alpha = std::max(alpha, score);
-            if(score >= beta)
+            if(alpha >= beta)
                 break;
         }else{
             score = std::min(score,getNodeScore(next_state,depth-1,alpha,beta,true, self));
             beta = std::min(beta, score);
-            if(score <= alpha)
+            if(beta <= alpha)
                 break;
         }
     }
